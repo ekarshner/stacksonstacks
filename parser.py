@@ -71,12 +71,10 @@ def parse_file( fname, edges, polygons, transform, screen, color ):
             #print 'args\t' + str(args)
         
         if line == 'push':
-               #do shit
-               pass
+          transform.append(deepcopy())
           
         if line == 'pop':
-          #do shit
-          pass
+          transform.pop()
      
         if line == 'sphere':
             #print 'SPHERE\t' + str(args)
