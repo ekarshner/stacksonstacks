@@ -50,7 +50,7 @@ The file follows the following format:
 
 See the file script for an example of the file format
 """
-ARG_COMMANDS = [ 'line', 'scale', 'move', 'rotate', 'save', 'circle', 'bezier', 'hermite', 'box', 'sphere', 'torus' ]
+ARG_COMMANDS = [ 'line', 'scale', 'move', 'rotate', 'save', 'circle', 'bezier', 'hermite', 'box', 'sphere', 'torus', 'push', 'pop' ]
 
 def parse_file( fname, edges, polygons, transform, screen, color ):
 
@@ -69,7 +69,15 @@ def parse_file( fname, edges, polygons, transform, screen, color ):
             c+= 1
             args = lines[c].strip().split(' ')
             #print 'args\t' + str(args)
-
+        
+        if line == 'push':
+               #do shit
+               pass
+          
+        if line == 'pop':
+          #do shit
+          pass
+     
         if line == 'sphere':
             #print 'SPHERE\t' + str(args)
             add_sphere(polygons,
