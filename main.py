@@ -8,7 +8,7 @@ screen = new_screen()
 color = [ 0, 255, 0 ]
 edges = []
 polygons = []
-temp = new_matrix
+temp = new_matrix()
 ident(temp)
 cstack = [temp]
 

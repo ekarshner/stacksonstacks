@@ -1,6 +1,7 @@
 from display import *
 from matrix import *
 from draw import *
+from copy import deepcopy
 
 """
 Goes through the file named filename and performs all of the actions listed in that file.
@@ -50,7 +51,7 @@ The file follows the following format:
 
 See the file script for an example of the file format
 """
-ARG_COMMANDS = [ 'line', 'scale', 'move', 'rotate', 'save', 'circle', 'bezier', 'hermite', 'box', 'sphere', 'torus', 'push', 'pop' ]
+ARG_COMMANDS = [ 'line', 'scale', 'move', 'rotate', 'save', 'circle', 'bezier', 'hermite', 'box', 'sphere', 'torus']
 
 def parse_file( fname, edges, polygons, cstack, screen, color ):
 
@@ -71,7 +72,7 @@ def parse_file( fname, edges, polygons, cstack, screen, color ):
             #print 'args\t' + str(args)
 
         if line == 'push':
-          cstack.append(deepcopy())
+          cstack.append(deepcopy(cstack[-1]))
 
         if line == 'pop':
           cstack.pop()
@@ -82,7 +83,7 @@ def parse_file( fname, edges, polygons, cstack, screen, color ):
                        float(args[0]), float(args[1]), float(args[2]),
                        float(args[3]), step_3d)
             matrix_mult(cstack[-1], polygons)
-            draw_polygons(polygons)
+            draw_polygons(polygons, screen, color)
             polygons = []
 
         elif line == 'torus':
@@ -91,7 +92,7 @@ def parse_file( fname, edges, polygons, cstack, screen, color ):
                       float(args[0]), float(args[1]), float(args[2]),
                       float(args[3]), float(args[4]), step_3d)
             matrix_mult(cstack[-1], polygons)
-            draw_polygons(polygons)
+            draw_polygons(polygons, screen, color)
             polygons = []
 
         elif line == 'box':
@@ -100,7 +101,7 @@ def parse_file( fname, edges, polygons, cstack, screen, color ):
                     float(args[0]), float(args[1]), float(args[2]),
                     float(args[3]), float(args[4]), float(args[5]))
             matrix_mult(cstack[-1], polygons)
-            draw_polygons(polygons)
+            draw_polygons(polygons, screen, color)
             polygons = []
 
         elif line == 'circle':
@@ -109,7 +110,7 @@ def parse_file( fname, edges, polygons, cstack, screen, color ):
                        float(args[0]), float(args[1]), float(args[2]),
                        float(args[3]), step)
             matrix_mult(cstack[-1], edges)
-            draw_lines(edges)
+            draw_lines(edges, screen, color)
             edges = []
 
         elif line == 'hermite' or line == 'bezier':
@@ -121,7 +122,7 @@ def parse_file( fname, edges, polygons, cstack, screen, color ):
                       float(args[6]), float(args[7]),
                       step, line)
             matrix_mult(cstack[-1], edges)
-            draw_lines(edges)
+            draw_lines(edges, screen, color)
             edges = []
 
         elif line == 'line':
@@ -131,7 +132,7 @@ def parse_file( fname, edges, polygons, cstack, screen, color ):
                       float(args[0]), float(args[1]), float(args[2]),
                       float(args[3]), float(args[4]), float(args[5]) )
             matrix_mult(cstack[-1], edges)
-            draw_lines(edges)
+            draw_lines(edges, screen, color)
             edges = []
 
         elif line == 'scale':
